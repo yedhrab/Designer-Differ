@@ -1,0 +1,45 @@
+# 3. Gün Çalışma Notları
+
+## VS Uzantı Oluşturma Araştırıldı
+
+- C# dili ile uzantı programlanmakta
+- Uzantı için VS SDK indirildi
+
+> https://docs.microsoft.com/en-us/visualstudio/extensibility/starting-to-develop-visual-studio-extensions?view=vs-2019
+
+## C# Quick Start Üzerine Çalışıldı
+
+- Notlar alındı ve VS interactive C# üzeriden ufak işlemler yapıldı
+- Son gelinen alan `C# - Namespaces`
+- C# adlandırma kurallarına bakıldı
+
+> - https://www.tutorialspoint.com/csharp/csharp_quick_guide.htm
+> - https://www.dofactory.com/reference/csharp-coding-standards
+
+## Designer.cs Araştırmaları
+
+### Değişikleri Sadece Gerektiğinde Almak
+
+Our dev teams address this by committing the `Resource.Designer.cs` to our Git repo. After that, each developer can run `git update-index --assume-unchanged Resource.Designer.cs` to make Git ignore updates to that file.
+
+After updating the index, changes made to the `Resource.Designer` file will not appear in the "Changes not staged for commit" section when doing a `git status`. 
+
+If a commit to that file becomes necessary just execute `git update-index --no-assume-unchanged Resource.Designer.cs` and Git will start tracking changes to that file again.
+
+> https://stackoverflow.com/a/44028056
+
+### WinForm, Git ile kullanılmayacak kadar eski
+
+- Her defasında yeniden kod üretiyor ve düzeni yok
+- Git popüler olmadan önce ortaya çıkmış eski bir yapı olduğundan, git ile düzgün gitmiyor
+- WPF teknolojisinin kullanılması öneriliyor
+
+> https://www.reddit.com/r/git/comments/997frb/handling_merge_conflicts_with_c_designercs_files/e4lywv9/
+
+### Değişiklik Sorunlarını Azaltma Tavsiyeleri
+
+- `.gitattributes` dosyası içerisine `*.csproj  merge=union` eklemek sorunu kısmi olarak çözmekte ama nadiren de olsa hatalar gelebiliyor
+- Desingler içerisindeki kodların sıralanması ve bu sayede git üzerinden yakalanabilmesi
+- Bu işlem sorunu tamamen çözmez sadece azaltır
+
+> https://haacked.com/archive/2014/04/16/csproj-merge-conflicts/
