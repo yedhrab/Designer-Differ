@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace File_Differ
 {
@@ -80,16 +81,10 @@ namespace File_Differ
             dte2.ExecuteCommand("Tools.DiffFiles", $"\"{filepath1}\" \"{filepath2}\"");
         }
 
-        public static Window OpenCodeFile(DTE2 dte2, string filepath)
+        public static bool IsFuncExistInCodeElements(CodeElements codeElements, string name, out CodeFunction cf)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            return dte2.ItemOperations.OpenFile(filepath, Constants.vsViewKindCode);
-        }
-
-        public static bool IsFuncExistInFileCodeModel(FileCodeModel fcm, string name, out CodeFunction cf)
-        {
-            ThreadHelper.ThrowIfNotOnUIThread();
-            foreach (CodeElement element in fcm.CodeElements)
+            foreach (CodeElement element in codeElements)
             {
                 if (element is CodeNamespace)
                 {
@@ -118,6 +113,12 @@ namespace File_Differ
             }
             cf = null;
             return false;
+        }
+
+        public static bool IsFuncExistInFileCodeModel(FileCodeModel fcm, string name, out CodeFunction cf)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+            return IsFuncExistInCodeElements(fcm.CodeElements, name, out cf);
         }
 
         public static bool IsFuncExistInActiveDocument(DTE2 dte, string name, out CodeFunction cf)

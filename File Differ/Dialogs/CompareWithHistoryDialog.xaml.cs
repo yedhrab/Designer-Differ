@@ -50,7 +50,6 @@ namespace File_Differ
                 branch = "HEAD";
             }
 
-            // TODO
             var dte2 = await Utility.GetDTE2Async(asyncServiceProvider);
 
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
@@ -59,18 +58,17 @@ namespace File_Differ
                 string solutionDir = System.IO.Path.GetDirectoryName(dte2.Solution.FullName);
                 string fileContent = Utility.GetFileHistoryContent(solutionDir, filepath, branch, commitHash);
                 string tempFilePath = Utility.CopyContentToTemp(filepath, fileContent);
-                Utility.DiffFiles(dte2, tempFilePath, filepath);
-                this.Close();
-                return;
-                // TODO: Null geliyor, window dışında bir işlem yapılmalı sanırım
-                EnvDTE.Window window = Utility.OpenCodeFile(dte2, tempFilePath);
-                if (Utility.IsFuncExistInFileCodeModel(window.ProjectItem.FileCodeModel, "InitializeComponent", out CodeFunction cf))
+
+                var projectItem = dte2.ItemOperations.AddExistingItem(filepath);
+                if (Utility.IsFuncExistInFileCodeModel(projectItem.FileCodeModel, "InitializeComponent", out CodeFunction cf))
                 {
                     string generatedCode = Utility.GetFunctionBodyText(cf);
                     generatedCode = Utility.StripComments(generatedCode);
                     generatedCode = Utility.SortContentBy(generatedCode, '\n');
                     Utility.ReplaceFunctionBodyText(generatedCode, cf);
                 }
+
+                Utility.DiffFiles(dte2, tempFilePath, filepath);
             }
 
             this.Close();
