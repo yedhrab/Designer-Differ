@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Shell;
 using Task = System.Threading.Tasks.Task;
 
-namespace File_Differ
+namespace DesignerDiffer
 {
     /// <summary>
     /// Command handler
@@ -88,7 +88,7 @@ namespace File_Differ
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event args.</param>
-        private async void Execute(object sender, EventArgs e)
+        private void Execute(object sender, EventArgs e)
         {
 
             ShowCompareWithHistoryWindow();

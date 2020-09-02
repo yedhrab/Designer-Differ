@@ -66,21 +66,21 @@
 				<Parent guid="guidFile_VSPackageCmdSet" id="FileContextMenuGroup" />
 				<Icon guid="guidImages1" id="bmpPic2" />
 				<Strings>
-					<ButtonText>Compare with history...</ButtonText>
+					<ButtonText>Compare designer file with history...</ButtonText>
 				</Strings>
 			</Button>
 			<Button guid="guidFile_VSPackageCmdSet" id="DiffContentCommandId" priority="0x0100" type="Button">
 				<Parent guid="guidFile_VSPackageCmdSet" id="EditorContextMenuGroup" />
 				<Icon guid="guidImages2" id="bmpPic3" />
 				<Strings>
-					<ButtonText>Sort generated code</ButtonText>
+					<ButtonText>Sort Windows Form Designer Generated Code</ButtonText>
 				</Strings>
 			</Button>
 		</Buttons>
 
 		<!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
 		<Bitmaps>
-			<!--  The bitmap id is defined in a way that is a little bit different from the others:
+			<!--  The bitmap id is defined in a way that is a little bit "ent from the others:
             the declaration starts with a guid for the bitmap strip, then there is the resource id of the
             bitmap strip containing the bitmaps and then there are the numeric ids of the elements used
             inside a button definition. An important aspect of this declaration is that the element id

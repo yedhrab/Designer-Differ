@@ -9,7 +9,7 @@ using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
 using Task = System.Threading.Tasks.Task;
 
-namespace File_Differ
+namespace DesignerDiffer
 {
     /// <summary>
     /// Command handler
@@ -92,7 +92,7 @@ namespace File_Differ
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         private async void Execute(object sender, EventArgs e)
         {
-            var dte = await ServiceProvider.GetServiceAsync(typeof(DTE)).ConfigureAwait(false) as DTE2 ?? throw new NullReferenceException("DTE alınamadı");
+            var dte = await Utility.GetDTE2Async(ServiceProvider);
 
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
             if (CanFilesBeCompared(dte, out string file1, out string file2))

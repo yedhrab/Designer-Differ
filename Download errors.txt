@@ -1,0 +1,12 @@
+﻿Sorry, there was a problem downloading some files from OneDrive. Please try again.
+
+createTemplateManifests.cache - https://onedrive.live.com/?cid=9db9869ddc77db69&id=9DB9869DDC77DB69%21109422&action=Download
+
+Designer Differ.csproj.VsixDeployedFileListAbsolute.txt - https://onedrive.live.com/?cid=9db9869ddc77db69&id=9DB9869DDC77DB69%21109416&action=Download
+
+File Differ.csproj.VsixDeployedFileListAbsolute.txt - https://onedrive.live.com/?cid=9db9869ddc77db69&id=9DB9869DDC77DB69%21109403&action=Download
+
+mergeCto.cache - https://onedrive.live.com/?cid=9db9869ddc77db69&id=9DB9869DDC77DB69%21109393&action=Download
+
+
+

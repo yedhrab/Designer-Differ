@@ -8,7 +8,7 @@ using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
 using Task = System.Threading.Tasks.Task;
 
-namespace File_Differ
+namespace DesignerDiffer
 {
     /// <summary>
     /// Command handler
@@ -92,10 +92,13 @@ namespace File_Differ
             var dte = await ServiceProvider.GetServiceAsync(typeof(DTE)).ConfigureAwait(false) as DTE2 ?? throw new NullReferenceException("DTE alınamadı");
 
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-            TextSelection ts = dte.ActiveWindow.Selection as TextSelection;
-            if (ts == null) return;
-
-            Utility.SortFunctionBodyInActiveDocument(dte, "InitializeComponents");
+            FileCodeModel activeFileCodeModel = dte.ActiveDocument.ProjectItem.FileCodeModel;
+            if (activeFileCodeModel == null)
+            {
+                MessageBox.Show("Aktif dosya içeriği desteklenmiyor");
+                return;
+            }
+            Utility.SortFunctionBodyIfExist(activeFileCodeModel, Utility.GeneratedFunctionName);
         }
     }
 }

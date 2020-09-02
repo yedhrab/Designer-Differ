@@ -5,5 +5,5 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>", Scope = "member", Target = "~M:File_Differ.DiffContentCommand.Execute(System.Object,System.EventArgs)")]
-[assembly: SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>", Scope = "member", Target = "~M:File_Differ.CompareWithHistoryDialog.OnSave(System.Object,System.Windows.RoutedEventArgs)")]
+[assembly: SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>", Scope = "member", Target = "~M:DesignerDiffer.DiffContentCommand.Execute(System.Object,System.EventArgs)")]
+[assembly: SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>", Scope = "member", Target = "~M:DesignerDiffer.CompareWithHistoryDialog.OnCompare(System.Object,System.Windows.RoutedEventArgs)")]

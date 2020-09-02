@@ -1,4 +1,5 @@
 ﻿using EnvDTE;
+using EnvDTE80;
 using Microsoft.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Shell;
 using System;
@@ -17,7 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Task = System.Threading.Tasks.Task;
 
-namespace File_Differ
+namespace DesignerDiffer
 {
     /// <summary>
     /// Interaction logic for CompareWithHistoryDialog.xaml
@@ -38,7 +39,7 @@ namespace File_Differ
             this.Close();
         }
 
-        private async void OnSave(object sender, RoutedEventArgs e)
+        private async void OnCompare(object sender, RoutedEventArgs e)
         {
 
             string branch = this.BranchTextBox.Text.Trim();
@@ -50,27 +51,44 @@ namespace File_Differ
                 branch = "HEAD";
             }
 
-            var dte2 = await Utility.GetDTE2Async(asyncServiceProvider);
+            DTE2 dte2 = await Utility.GetDTE2Async(asyncServiceProvider);
 
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-            if (Utility.CanFileBeCompared(dte2, out string filepath))
+            if (Utility.CanFileBeCompared(dte2, out string filePath))
             {
                 string solutionDir = System.IO.Path.GetDirectoryName(dte2.Solution.FullName);
-                string fileContent = Utility.GetFileHistoryContent(solutionDir, filepath, branch, commitHash);
-                string tempFilePath = Utility.CopyContentToTemp(filepath, fileContent);
+                string fileContent = Utility.GetFileHistoryContent(solutionDir, filePath, branch, commitHash);
+                string tempFilePath = Utility.CopyContentToTemp(filePath, fileContent);
 
-                var projectItem = dte2.ItemOperations.AddExistingItem(filepath);
-                if (Utility.IsFuncExistInFileCodeModel(projectItem.FileCodeModel, "InitializeComponent", out CodeFunction cf))
+                ProjectItem selectedProjectItem = dte2.ItemOperations.AddExistingItem(filePath);
+                FileCodeModel selectedFileCodeModel = selectedProjectItem.FileCodeModel;
+                if (selectedFileCodeModel != null)
                 {
-                    string generatedCode = Utility.GetFunctionBodyText(cf);
-                    generatedCode = Utility.StripComments(generatedCode);
-                    generatedCode = Utility.SortContentBy(generatedCode, '\n');
-                    Utility.ReplaceFunctionBodyText(generatedCode, cf);
+                    if (Utility.SortFunctionBodyIfExist(selectedFileCodeModel, Utility.GeneratedFunctionName))
+                    {
+                        ProjectItem tempProjectItem = dte2.ItemOperations.AddExistingItem(tempFilePath);
+                        if (Utility.SortFunctionBodyIfExist(tempProjectItem.FileCodeModel, Utility.GeneratedFunctionName))
+                        {
+                            tempProjectItem.Save();
+                            string oldFilePath = filePath.Replace(selectedProjectItem.Name, tempProjectItem.Name);
+                            Utility.DiffFiles(dte2, oldFilePath, filePath);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Seçili dosyanın belirtilen commit hash için kaydı git ile bulunamadı");
+                        }
+                        tempProjectItem.Delete();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Seçili dosya designer dosyası değil");
+                    }
                 }
-
-                Utility.DiffFiles(dte2, tempFilePath, filepath);
+                else
+                {
+                    MessageBox.Show("Dosya içeriği desteklenmiyor");
+                }
             }
-
             this.Close();
         }
 

@@ -9,18 +9,18 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace File_Differ
+namespace DesignerDiffer
 {
     public abstract class Utility
     {
+
+        public const string GeneratedFunctionName = "InitializeComponent";
 
         public static async Task<DTE2> GetDTE2Async(IAsyncServiceProvider asyncServiceProvider) => await asyncServiceProvider.GetServiceAsync(typeof(DTE)).ConfigureAwait(false) as DTE2 ?? throw new NullReferenceException("DTE alınamadı");
 
         public static string CopyContentToTemp(string filepath, string fileContent)
         {
-            string[] splitFilepath = filepath.Split('\\');
-            string bareFilename = splitFilepath[splitFilepath.Length - 1];
-            string tempFilepath = System.IO.Path.GetTempPath() + bareFilename;
+            string tempFilepath = System.IO.Path.GetTempPath() + "~" + filepath.Split('\\').Last();
             System.IO.File.WriteAllText(tempFilepath, fileContent, Encoding.UTF8);
             return tempFilepath;
         }
@@ -30,7 +30,7 @@ namespace File_Differ
             string relatedFilePath = filepath.Replace($"{repo}\\", "").Replace("\\", "/");
 
             string fileContent = "";
-            var gitProcess = Utility.GitProcess($"show {branch}{commitHash}:{relatedFilePath}", repo);
+            var gitProcess = GitProcess($"show {branch}{commitHash}:{relatedFilePath}", repo);
             gitProcess.Start();
             while (!gitProcess.StandardOutput.EndOfStream)
             {
@@ -136,6 +136,7 @@ namespace File_Differ
 
         public static string SortContentBy(string content, char delim)
         {
+            // TODO: Aynı obje kullanımları bittikten sonra \n koyulabilir
             return string.Join(delim.ToString(), content.Split(delim).OrderBy(p => p)).Trim();
         }
 
@@ -151,16 +152,25 @@ namespace File_Differ
             cf.GetStartPoint(vsCMPart.vsCMPartBody).CreateEditPoint().ReplaceText(cf.EndPoint, text, (int)vsEPReplaceTextOptions.vsEPReplaceTextAutoformat);
         }
 
-        public static void SortFunctionBodyInActiveDocument(DTE2 dte, string funcName)
+        public static void SortFunctionBody(CodeFunction cf)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            if (Utility.IsFuncExistInActiveDocument(dte, funcName, out CodeFunction cf))
-            {
-                string generatedCode = Utility.GetFunctionBodyText(cf);
-                generatedCode = Utility.StripComments(generatedCode);
-                generatedCode = Utility.SortContentBy(generatedCode, '\n');
-                Utility.ReplaceFunctionBodyText(generatedCode, cf);
-            }
+            string generatedCode = GetFunctionBodyText(cf);
+            generatedCode = StripComments(generatedCode);
+            generatedCode = SortContentBy(generatedCode, '\n');
+            ReplaceFunctionBodyText(generatedCode, cf);
         }
+
+        public static bool SortFunctionBodyIfExist(FileCodeModel fcm, string funcName)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+            if (IsFuncExistInFileCodeModel(fcm, funcName, out CodeFunction cf))
+            {
+                SortFunctionBody(cf);
+                return true;
+            }
+            return false;
+        }
+
     }
 }

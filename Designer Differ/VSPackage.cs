@@ -4,7 +4,7 @@ using System.Threading;
 using Microsoft.VisualStudio.Shell;
 using Task = System.Threading.Tasks.Task;
 
-namespace File_Differ
+namespace DesignerDiffer
 {
     /// <summary>
     /// This is the class that implements the package exposed by this assembly.
@@ -29,7 +29,7 @@ namespace File_Differ
     public sealed class VSPackage : AsyncPackage
     {
         /// <summary>
-        /// File_DifferPackage GUID string.
+        /// DesignerDiffer GUID string.
         /// </summary>
         public const string PackageGuidString = "717f3e2d-aaf6-486c-add8-fa6228f4d907";
 

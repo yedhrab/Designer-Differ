@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="e4f66399-313b-499d-9fe1-51a4004e9d01" Version="1.0" Language="en-US" Publisher="Yed" />
+        <Identity Id="e4f66399-313b-499d-9fe1-51a4004e9d01" Version="1.0.0" Language="en-US" Publisher="Yed" />
         <DisplayName>Designer-Differ</DisplayName>
-        <Description xml:space="preserve">The easiest way to diff file directly from Solution Explorer.</Description>
+        <Description xml:space="preserve">The easiest way to sort windows form designer generated code, to diff files and windows form designer file with git history directly from Solution Explorer.</Description>
+        <License>LICENSE.txt</License>
         <Icon>Resources\Icon.png</Icon>
         <PreviewImage>Resources\Preview.png</PreviewImage>
     </Metadata>
