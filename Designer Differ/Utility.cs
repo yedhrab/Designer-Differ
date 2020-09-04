@@ -15,12 +15,13 @@ namespace DesignerDiffer
     {
 
         public const string GeneratedFunctionName = "InitializeComponent";
+        public const string TempPrefix = "~";
 
         public static async Task<DTE2> GetDTE2Async(IAsyncServiceProvider asyncServiceProvider) => await asyncServiceProvider.GetServiceAsync(typeof(DTE)).ConfigureAwait(false) as DTE2 ?? throw new NullReferenceException("DTE alınamadı");
 
-        public static string CopyContentToTemp(string filepath, string fileContent)
+        public static string CopyContentToTemp(string fileName, string fileContent)
         {
-            string tempFilepath = System.IO.Path.GetTempPath() + "~" + filepath.Split('\\').Last();
+            string tempFilepath = System.IO.Path.GetTempPath() + fileName;
             System.IO.File.WriteAllText(tempFilepath, fileContent, Encoding.UTF8);
             return tempFilepath;
         }

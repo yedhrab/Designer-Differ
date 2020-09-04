@@ -57,41 +57,47 @@ namespace DesignerDiffer
             if (Utility.CanFileBeCompared(dte2, out string filePath))
             {
                 string solutionDir = System.IO.Path.GetDirectoryName(dte2.Solution.FullName);
-                string fileContent = Utility.GetFileHistoryContent(solutionDir, filePath, branch, commitHash);
-                string tempFilePath = Utility.CopyContentToTemp(filePath, fileContent);
+                string fileName = filePath.Split('\\').Last();
 
-                ProjectItem selectedProjectItem = dte2.ItemOperations.AddExistingItem(filePath);
-                FileCodeModel selectedFileCodeModel = selectedProjectItem.FileCodeModel;
-                if (selectedFileCodeModel != null)
+                string copiedFileContent = System.IO.File.ReadAllText(filePath);
+                string copiedFileName = Utility.TempPrefix + fileName;
+                string copiedFilePath = Utility.CopyContentToTemp(copiedFileName, copiedFileContent);
+
+                ProjectItem copyProjectItem = dte2.ItemOperations.AddExistingItem(copiedFilePath);
+                if (Utility.SortFunctionBodyIfExist(copyProjectItem.FileCodeModel, Utility.GeneratedFunctionName))
                 {
-                    if (Utility.SortFunctionBodyIfExist(selectedFileCodeModel, Utility.GeneratedFunctionName))
+                    copyProjectItem.Save();
+                    copiedFilePath = filePath.Replace(fileName, copiedFileName);
+                    copiedFileContent = System.IO.File.ReadAllText(copiedFilePath);
+                    copiedFilePath = Utility.CopyContentToTemp(copiedFileName, copiedFileContent);
+
+                    string oldFileContent = Utility.GetFileHistoryContent(solutionDir, filePath, branch, commitHash);
+                    string oldFileName = Utility.TempPrefix + Utility.TempPrefix + fileName;
+                    string oldFilePath = Utility.CopyContentToTemp(oldFileName, oldFileContent);
+
+                    ProjectItem oldProjectItem = dte2.ItemOperations.AddExistingItem(oldFilePath);
+                    if (Utility.SortFunctionBodyIfExist(oldProjectItem.FileCodeModel, Utility.GeneratedFunctionName))
                     {
-                        ProjectItem tempProjectItem = dte2.ItemOperations.AddExistingItem(tempFilePath);
-                        if (Utility.SortFunctionBodyIfExist(tempProjectItem.FileCodeModel, Utility.GeneratedFunctionName))
-                        {
-                            tempProjectItem.Save();
-                            string oldFilePath = filePath.Replace(selectedProjectItem.Name, tempProjectItem.Name);
-                            Utility.DiffFiles(dte2, oldFilePath, filePath);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Seçili dosyanın belirtilen commit hash için kaydı git ile bulunamadı");
-                        }
-                        tempProjectItem.Delete();
+                        oldProjectItem.Save();
+                        oldFilePath = filePath.Replace(fileName, oldFileName);
+                        oldFileContent = System.IO.File.ReadAllText(oldFilePath);
+                        oldFilePath = Utility.CopyContentToTemp(oldFileName, oldFileContent);
+
+                        Utility.DiffFiles(dte2, oldFilePath, copiedFilePath);
                     }
                     else
                     {
-                        MessageBox.Show("Seçili dosya designer dosyası değil");
+                        MessageBox.Show("Seçili dosyanın belirtilen commit hash için kaydı git ile bulunamadı");
                     }
+                    oldProjectItem.Delete();
                 }
                 else
                 {
-                    MessageBox.Show("Dosya içeriği desteklenmiyor");
+                    MessageBox.Show("Seçili dosya designer dosyası değil");
                 }
+                copyProjectItem.Delete();
             }
             this.Close();
         }
-
-
     }
 }
