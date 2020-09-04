@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace DesignerDiffer
 {
@@ -171,6 +172,19 @@ namespace DesignerDiffer
                 return true;
             }
             return false;
+        }
+
+        public static void SortXMLByName(XContainer container)
+        {
+            container.ReplaceNodes(
+                from childEl in container.Elements()
+                orderby childEl.Name.LocalName descending
+                select childEl
+            );
+            foreach (XElement childEl in container.Elements())
+            {
+                SortXMLByName(childEl);
+            }
         }
 
     }

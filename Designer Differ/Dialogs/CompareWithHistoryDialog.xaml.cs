@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 using Task = System.Threading.Tasks.Task;
 
 namespace DesignerDiffer
@@ -63,39 +64,60 @@ namespace DesignerDiffer
                 string copiedFileName = Utility.TempPrefix + fileName;
                 string copiedFilePath = Utility.CopyContentToTemp(copiedFileName, copiedFileContent);
 
-                ProjectItem copyProjectItem = dte2.ItemOperations.AddExistingItem(copiedFilePath);
-                if (Utility.SortFunctionBodyIfExist(copyProjectItem.FileCodeModel, Utility.GeneratedFunctionName))
+                if (copiedFileName.Split('.').Last() == "cs")
                 {
-                    copyProjectItem.Save();
-                    copiedFilePath = filePath.Replace(fileName, copiedFileName);
-                    copiedFileContent = System.IO.File.ReadAllText(copiedFilePath);
-                    copiedFilePath = Utility.CopyContentToTemp(copiedFileName, copiedFileContent);
-
-                    string oldFileContent = Utility.GetFileHistoryContent(solutionDir, filePath, branch, commitHash);
-                    string oldFileName = Utility.TempPrefix + Utility.TempPrefix + fileName;
-                    string oldFilePath = Utility.CopyContentToTemp(oldFileName, oldFileContent);
-
-                    ProjectItem oldProjectItem = dte2.ItemOperations.AddExistingItem(oldFilePath);
-                    if (Utility.SortFunctionBodyIfExist(oldProjectItem.FileCodeModel, Utility.GeneratedFunctionName))
+                    ProjectItem copyProjectItem = dte2.ItemOperations.AddExistingItem(copiedFilePath);
+                    if (Utility.SortFunctionBodyIfExist(copyProjectItem.FileCodeModel, Utility.GeneratedFunctionName))
                     {
-                        oldProjectItem.Save();
-                        oldFilePath = filePath.Replace(fileName, oldFileName);
-                        oldFileContent = System.IO.File.ReadAllText(oldFilePath);
-                        oldFilePath = Utility.CopyContentToTemp(oldFileName, oldFileContent);
+                        copyProjectItem.Save();
+                        copiedFilePath = filePath.Replace(fileName, copiedFileName);
+                        copiedFileContent = System.IO.File.ReadAllText(copiedFilePath);
+                        copiedFilePath = Utility.CopyContentToTemp(copiedFileName, copiedFileContent);
 
-                        Utility.DiffFiles(dte2, oldFilePath, copiedFilePath);
+                        string oldFileContent = Utility.GetFileHistoryContent(solutionDir, filePath, branch, commitHash);
+                        string oldFileName = Utility.TempPrefix + copiedFileName;
+                        string oldFilePath = Utility.CopyContentToTemp(oldFileName, oldFileContent);
+
+                        ProjectItem oldProjectItem = dte2.ItemOperations.AddExistingItem(oldFilePath);
+                        if (Utility.SortFunctionBodyIfExist(oldProjectItem.FileCodeModel, Utility.GeneratedFunctionName))
+                        {
+                            oldProjectItem.Save();
+                            oldFilePath = filePath.Replace(fileName, oldFileName);
+                            oldFileContent = System.IO.File.ReadAllText(oldFilePath);
+                            oldFilePath = Utility.CopyContentToTemp(oldFileName, oldFileContent);
+
+                            Utility.DiffFiles(dte2, oldFilePath, copiedFilePath);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Seçili dosyanın belirtilen commit hash için kaydı git ile bulunamadı");
+                        }
+                        oldProjectItem.Delete();
                     }
                     else
                     {
-                        MessageBox.Show("Seçili dosyanın belirtilen commit hash için kaydı git ile bulunamadı");
+                        MessageBox.Show("Seçili dosya designer dosyası değil");
                     }
-                    oldProjectItem.Delete();
+                    copyProjectItem.Delete();
                 }
-                else
+                else if (copiedFileName.Split('.').Last() == "resx")
                 {
-                    MessageBox.Show("Seçili dosya designer dosyası değil");
+                    XDocument doc = XDocument.Load(copiedFilePath);
+                    Utility.SortXMLByName(doc.Root);
+                    copiedFilePath = System.IO.Path.GetTempPath() + copiedFileName;
+                    doc.Save(copiedFilePath);
+
+                    string oldFileContent = Utility.GetFileHistoryContent(solutionDir, filePath, branch, commitHash);
+                    string oldFileName = Utility.TempPrefix + copiedFileName;
+                    string oldFilePath = Utility.CopyContentToTemp(oldFileName, oldFileContent);
+
+                    doc = XDocument.Load(oldFilePath);
+                    Utility.SortXMLByName(doc.Root);
+                    oldFilePath = System.IO.Path.GetTempPath() + oldFileName;
+                    doc.Save(oldFilePath);
+
+                    Utility.DiffFiles(dte2, oldFilePath, copiedFilePath);
                 }
-                copyProjectItem.Delete();
             }
             this.Close();
         }
