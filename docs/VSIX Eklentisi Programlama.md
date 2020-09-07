@@ -1,18 +1,38 @@
-# VSIX Eklentisi Programlama
+# 🧩 Visual Studio Eklentisi Programlama
 
-## VSIX Eklentisi Proje Yapısı
+## 💎 Ön Gereksinimler
+
+Eklentiyi Visual Studio için C# ile programlamlayacağımızdan dolayı:
+
+- ⏬ `Visual Studio` ve `Visual Studio extension development` iş yükü indirilmelidir
+- 💁‍♂️ Eklenti için derinden bir C# bilgisi yerine hızlı bir öğrenmeye odaklanılması kafidir
+- 🏃‍♂️ Hızlıca C# öğrenmek için [CSharp Quick Guide](https://www.tutorialspoint.com/csharp/csharp_quick_guide.htm) sayfasına bakmalısın
+- 👮‍♂️ Yazım standartları için [CSharp Coding Standarts](https://www.dofactory.com/reference/csharp-coding-standards) alanına da bakabilirsin
+
+> 📃 C# Hakkında bilgi için [C# Quick Start](./assets/C#%20Quick%20Start.pdf) pdf notlarımı da inceleyebilirsin
+
+![](./assets/visual_studio_extension_development.png)
+
+## 🔰 VSIX Yapımına Hazırlanma
+
+Aşağıdaki video ile başlangıç seviyesi için hızlıca gerekli bilgileri öğrenebilirsin
+
+[![](assets/vs_extensibility_2015_template.png)](https://channel9.msdn.com/Events/Build/2016/B886/player)
+
+
+### 🏗️ VSIX Eklentisi Proje Yapısı
 
 - `vcst` ve `vsixmanifest` dosyası `sync` edilmeli
 
 ![](assets/vsix_project_structure.png)
 
-## Proje İsmi Güncelleme
+### 👨‍🔧 Proje İsmi Güncelleme
 
 - `Solution Explorer` üzerinden `Properties` alanından güncellenir
 
 ![](assets/vsix_change_project_name.png)
 
-## VSIX Komutları için Guid Otomasyonu
+## 🤖 VSIX Komutları için Guid Otomasyonu
 
 - Aşağıdaki alanlar senkronize olan `vsct` c# dosyasından çekilmelidir
 
@@ -32,38 +52,36 @@ internal sealed class CompareHistoryCommand
 }
 ```
 
-## VS SDK Menu ID'leri
+## 🆔 VS SDK Menu ID'leri
 
 - [GUIDs and IDs of Visual Studio menus](https://docs.microsoft.com/en-us/visualstudio/extensibility/internals/guids-and-ids-of-visual-studio-menus?view=vs-2019s)
 - [IDE-Defined Commands for Extending Project Systems](https://docs.microsoft.com/en-us/visualstudio/extensibility/internals/ide-defined-commands-for-extending-project-systems?view=vs-2019s)
 
 
-## VSIX için ikon ekleme
+## 🖼️ VSIX için ikon ekleme
 
 ![](assets/vsix_known_monikers.png)
 
-- PNG dışındaki formatları da destekler ama PNG kullan
-- VSIX'de 3000 icon vardır bunları kullanabilmek için [Extensibility Essentials 2019](https://marketplace.visualstudio.com/items?itemName=MadsKristensen.ExtensibilityEssentials2019) eklentisini indir
-- View -> Other Windows -> KnownMoniker
-- Çıkan panelde seçilen ikonu Resource içerisine alttak özelliklerle eklemeliyiz:
+- 🌟 PNG dışındaki formatları da destekler ama PNG kullan
+- 📦 VSIX'de 3000 icon vardır bunları kullanabilmek için [Extensibility Essentials 2019](https://marketplace.visualstudio.com/items?itemName=MadsKristensen.ExtensibilityEssentials2019) eklentisini indir
+- ⚙️ View -> Other Windows -> KnownMoniker
+- 📝 Çıkan panelde seçilen ikonu Resource içerisine alttak özelliklerle eklemeliyiz:
   - `16 width` ile  `*Command.png` icon dosyasını overwrite ederek
   - `175 width` ile `Preview` isimle
   - `90 width` ile `Icon` isimle
-- `*.vsct` dosyası içerisinde **silmen gereken** kısımlar
+- 💦 `*.vsct` dosyası içerisinde **silmen gereken** kısımlar
   -  `Bitmap` alanında `usedList` kısmındaki değerlerden ilki hariç diğerlerini
   -  `GuidSymbol` alanındaki `IDSymbol` satırlarından ilki hariç diğerlerini
-
-
-- Son eklenen resimleri projeye dahil etmek için `Solution Explorer` alanında  sağdan 3. ikon `Show all files` ile resimleri bulup, onları seçip `Include From Project` demeliyiz
+- ➕ Son eklenen resimleri projeye dahil etmek için `Solution Explorer` alanında  sağdan 3. ikon `Show all files` ile resimleri bulup, onları seçip `Include From Project` demeliyiz
 ![](assets/vsıx_resources_example.png)
-- ``*.vsixmanifest` dosyasına ikon ve ön izleme resmi eklenmeli
+- 🔨 ``*.vsixmanifest` dosyasına ikon ve ön izleme resmi eklenmeli
 ![](assets/vsix_manifest_res_icon.png)
 
-## Visual Studio Ortam Objelerine Erişme
+## 🐥 Visual Studio Ortam Objelerine Erişme
 
-- IDE objelerine erişmek için `EnvDT80.DTE2` objesi kullanılır
-- `await <asyncServiceProvider>.GetServiceAsync(typeof(DTE)).ConfigureAwait(false) as DTE2` kodu ile DTE objesi alınır
-- `dte2.ItemOperations` kodu ile dosya açma, ekleme ve benzeri işlemler IDE ile otomatikleştirilebilir
+- 💠 IDE objelerine erişmek için `EnvDT80.DTE2` objesi kullanılır
+- 🍎 `await <asyncServiceProvider>.GetServiceAsync(typeof(DTE)).ConfigureAwait(false) as DTE2` kodu ile DTE objesi alınır
+- 📂 `dte2.ItemOperations` kodu ile dosya açma, ekleme ve benzeri işlemler IDE ile otomatikleştirilebilir
 
 | Kod | Açıklama|
 | -   | -        |
@@ -77,26 +95,26 @@ internal sealed class CompareHistoryCommand
 
 ![](assets/vsix_dte_automation_model.png)
 
-## ProjectItem
+## 📁 ProjectItem
 
-- Solution içerisinde yer alan ve derlenen proje dosyasını tutan objedir
-- Dosya üzerindeki otomasyon işlemleri bu obje ile yapılır
-- Dosya işlemleri `<projectItem>.Delete()`, `<projectItem>.Save()`, `<projectItem>.Remove()` gibi işlemler buradan yapılır
-- Dosya içerisindeki kaynak kod modeline `<projectItem>.FileCodeModel` şeklinde erişebiliriz
+- 💡 Solution içerisinde yer alan ve derlenen proje dosyasını tutan objedir
+- 🤖 Dosya üzerindeki otomasyon işlemleri bu obje ile yapılır
+- 📂 Dosya işlemleri `<projectItem>.Delete()`, `<projectItem>.Save()`, `<projectItem>.Remove()` gibi işlemler buradan yapılır
+- 👨‍💻 Dosya içerisindeki kaynak kod modeline `<projectItem>.FileCodeModel` şeklinde erişebiliriz
 
 ```c#
 ProjectItem selectedProjectItem = dte2.ItemOperations.AddExistingItem(filePath);
 FileCodeModel selectedFileCodeModel = selectedProjectItem.FileCodeModel;
 ```
 
-## FileCodeModel
+## 👨‍💻 FileCodeModel
 
-- IDE üzerinde derlenen (build) proje dosyaları (ProjectItem) kaynak kodlarını tutan modeldir
-- `CodeElements` olan kod elemanlarını tutan objelerden oluşur
-- `CodeNamespace`, `CodeElement`, `CodeClass`, `CodeFunction` gibi kaynak kod özelliğine göre obje içerir
-- `<codeNamespace | codeClass >.Children` komutu ile namespace veya class içerisindeki kaynak kod objelerine erişilir
+- 💡 IDE üzerinde derlenen (build) proje dosyaları (ProjectItem) kaynak kodlarını tutan modeldir
+- 🍏 `CodeElements` olan kod elemanlarını tutan objelerden oluşur
+- 🍎 `CodeNamespace`, `CodeElement`, `CodeClass`, `CodeFunction` gibi kaynak kod özelliğine göre obje içerir
+- 👨‍💻 `<codeNamespace | codeClass >.Children` komutu ile namespace veya class içerisindeki kaynak kod objelerine erişilir
 
->  Derlenmemiş dosyalarda yani projeye dahil olmayan harici dosyalara olan `Miscellaneous` dosyalarında FileCodeModel olmaz
+> 📢 Derlenmemiş dosyalarda - yani projeye dahil olmayan harici dosyalar olan `Miscellaneous` dosyalarında - FileCodeModel olmaz
 
 ```c#
 public static bool IsFuncExistInCodeElements(CodeElements codeElements, string name, out CodeFunction cf)
@@ -134,13 +152,13 @@ public static bool IsFuncExistInCodeElements(CodeElements codeElements, string n
 }
 ```
 
-## CodeElement
+## 🍏 CodeElement
 
-- CodeElement objelerinin metinlerine `<codeElement>.GetStartPoint(vsCMPart.vsCMPartBody).CreateEditPoint()` şeklinde erişilir
-- `GetStartPoint(<vsCMPart>)` ile enum değerleri olarak tanımlanan alanların başlangıc konumu alınır
-- `CreateEditPoint` ile konum bilgisinden içerik metnine erişilir
+- 🐥 CodeElement objelerinin metinlerine `<codeElement>.GetStartPoint(vsCMPart.vsCMPartBody).CreateEditPoint()` şeklinde erişilir
+- 📌 `GetStartPoint(<vsCMPart>)` ile enum değerleri olarak tanımlanan alanların başlangıc konumu alınır
+- 🔤 `CreateEditPoint` ile konum bilgisinden içerik metnine erişilir
 - İçerik metni üzerinden `GetText(<point>)`, `ReplaceText(<point>)` gibi komutlar metni değiştirebiliriz
-- Obje sonuna kadar almak veya değiştirmek için `<codeElement>.EndPoint` değeri kullanılır
+- 📝 Obje sonuna kadar almak veya değiştirmek için `<codeElement>.EndPoint` değeri kullanılır
 
 ```c#
 public static bool IsFuncExistInCodeElements(CodeElements codeElements, string name, out CodeFunction cf) 

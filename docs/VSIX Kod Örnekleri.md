@@ -1,4 +1,4 @@
-# VSIX ile Kod Örnekleri
+# 👨‍💻 VSIX ile Kod Örnekleri
 
 ## VSIX Aktif Dökümanın İçeriğini Alma
 
