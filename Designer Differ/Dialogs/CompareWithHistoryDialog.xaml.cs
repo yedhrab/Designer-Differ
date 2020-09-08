@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Shell;
 using System;
 using System.Collections.Generic;
+using System.IO.Packaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,6 +34,7 @@ namespace DesignerDiffer
             this.asyncServiceProvider = asyncServiceProvider;
 
             InitializeComponent();
+            CommitHashTextBox.Focus();
         }
 
         private void OnCancel(object sender, RoutedEventArgs e)
@@ -70,29 +72,35 @@ namespace DesignerDiffer
                     if (Utility.SortFunctionBodyIfExist(copyProjectItem.FileCodeModel, Utility.GeneratedFunctionName))
                     {
                         copyProjectItem.Save();
-                        copiedFilePath = filePath.Replace(fileName, copiedFileName);
-                        copiedFileContent = System.IO.File.ReadAllText(copiedFilePath);
+                        copiedFileContent = System.IO.File.ReadAllText(filePath.Replace(fileName, copiedFileName));
                         copiedFilePath = Utility.CopyContentToTemp(copiedFileName, copiedFileContent);
 
-                        string oldFileContent = Utility.GetFileHistoryContent(solutionDir, filePath, branch, commitHash);
-                        string oldFileName = Utility.TempPrefix + copiedFileName;
-                        string oldFilePath = Utility.CopyContentToTemp(oldFileName, oldFileContent);
-
-                        ProjectItem oldProjectItem = dte2.ItemOperations.AddExistingItem(oldFilePath);
-                        if (Utility.SortFunctionBodyIfExist(oldProjectItem.FileCodeModel, Utility.GeneratedFunctionName))
+                        try
                         {
-                            oldProjectItem.Save();
-                            oldFilePath = filePath.Replace(fileName, oldFileName);
-                            oldFileContent = System.IO.File.ReadAllText(oldFilePath);
-                            oldFilePath = Utility.CopyContentToTemp(oldFileName, oldFileContent);
+                            string oldFileContent = Utility.GetFileHistoryContent(solutionDir, filePath, branch, commitHash);
+                            string oldFileName = Utility.TempPrefix + copiedFileName;
+                            string oldFilePath = Utility.CopyContentToTemp(oldFileName, oldFileContent);
 
-                            Utility.DiffFiles(dte2, oldFilePath, copiedFilePath);
+                            ProjectItem oldProjectItem = dte2.ItemOperations.AddExistingItem(oldFilePath);
+                            if (Utility.SortFunctionBodyIfExist(oldProjectItem.FileCodeModel, Utility.GeneratedFunctionName))
+                            {
+                                oldProjectItem.Save();
+                                oldFileContent = System.IO.File.ReadAllText(filePath.Replace(fileName, oldFileName));
+                                oldFilePath = Utility.CopyContentToTemp(oldFileName, oldFileContent);
+
+                                Utility.DiffFiles(dte2, oldFilePath, copiedFilePath);
+                                this.Close();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Seçili dosyanın belirtilen commit hash için kaydı git ile bulunamadı");
+                            }
+                            oldProjectItem.Delete();
                         }
-                        else
+                        catch (System.ComponentModel.Win32Exception)
                         {
-                            MessageBox.Show("Seçili dosyanın belirtilen commit hash için kaydı git ile bulunamadı");
+                            MessageBox.Show("Git kurulu değil veya projede aktif değil");
                         }
-                        oldProjectItem.Delete();
                     }
                     else
                     {
@@ -107,19 +115,26 @@ namespace DesignerDiffer
                     copiedFilePath = System.IO.Path.GetTempPath() + copiedFileName;
                     doc.Save(copiedFilePath);
 
-                    string oldFileContent = Utility.GetFileHistoryContent(solutionDir, filePath, branch, commitHash);
-                    string oldFileName = Utility.TempPrefix + copiedFileName;
-                    string oldFilePath = Utility.CopyContentToTemp(oldFileName, oldFileContent);
+                    try
+                    {
+                        string oldFileName = Utility.TempPrefix + copiedFileName;
+                        string oldFileContent = Utility.GetFileHistoryContent(solutionDir, filePath, branch, commitHash);
+                        string oldFilePath = Utility.CopyContentToTemp(oldFileName, oldFileContent);
 
-                    doc = XDocument.Load(oldFilePath);
-                    Utility.SortXMLByName(doc.Root);
-                    oldFilePath = System.IO.Path.GetTempPath() + oldFileName;
-                    doc.Save(oldFilePath);
+                        doc = XDocument.Load(oldFilePath);
+                        Utility.SortXMLByName(doc.Root);
+                        doc.Save(oldFilePath);
 
-                    Utility.DiffFiles(dte2, oldFilePath, copiedFilePath);
+                        Utility.DiffFiles(dte2, oldFilePath, copiedFilePath);
+                        this.Close();
+                    }
+                    catch (System.ComponentModel.Win32Exception)
+                    {
+                        MessageBox.Show("Git kurulu değil veya projede aktif değil");
+                    }
                 }
             }
-            this.Close();
+
         }
     }
 }

@@ -2,6 +2,7 @@
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,7 +40,6 @@ namespace DesignerDiffer
                 string line = gitProcess.StandardOutput.ReadLine();
                 fileContent += line + "\n";
             }
-
             return fileContent;
         }
 
@@ -136,9 +136,32 @@ namespace DesignerDiffer
             return Regex.Replace(code, re, "$1");
         }
 
+        public static string SortContentByPart(string content, char delim)
+        {
+            string sortedContent = "";
+            string contentPart = "";
+            foreach (string line in content.Split('\n'))
+            {
+                if (!line.Contains("//"))
+                {
+                    contentPart += line + "\n";
+                }
+                else
+                {
+                    if (contentPart.Length > 0)
+                    {
+                        sortedContent += SortContentBy(contentPart, delim) + "\n";
+                        contentPart = "";
+                    }
+                    sortedContent += line + "\n";
+                }
+            }
+            if (contentPart.Length > 0) sortedContent += SortContentBy(contentPart, delim);
+            return sortedContent;
+        }
+
         public static string SortContentBy(string content, char delim)
         {
-            // TODO: Aynı obje kullanımları bittikten sonra \n koyulabilir
             return string.Join(delim.ToString(), content.Split(delim).OrderBy(p => p)).Trim();
         }
 
@@ -158,8 +181,7 @@ namespace DesignerDiffer
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             string generatedCode = GetFunctionBodyText(cf);
-            generatedCode = StripComments(generatedCode);
-            generatedCode = SortContentBy(generatedCode, '\n');
+            generatedCode = SortContentByPart(generatedCode, '\n');
             ReplaceFunctionBodyText(generatedCode, cf);
         }
 
