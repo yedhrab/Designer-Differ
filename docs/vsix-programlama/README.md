@@ -5,4 +5,4 @@
 - [İlk Projeyi Oluşturma](ilk-projeyi-olusturma.md)
 - [Eklenti Yönetimi](eklenti-yonetimi.md)
 - [Geliştirmeler](gelistirmeler.md)
-- [IDE Objelerine Erişme](ide-objelerine-erişme.mds)
+- [IDE Objelerine Erişme](ide-objelerine-erişme.md)

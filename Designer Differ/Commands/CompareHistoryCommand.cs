@@ -90,7 +90,6 @@ namespace DesignerDiffer
         /// <param name="e">Event args.</param>
         private void Execute(object sender, EventArgs e)
         {
-
             ShowCompareWithHistoryWindow();
         }
 
