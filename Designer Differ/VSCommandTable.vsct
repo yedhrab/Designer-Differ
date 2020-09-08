@@ -57,21 +57,21 @@
           If you do not want an image next to your command, remove the Icon node /> -->
 			<Button guid="guidFile_VSPackageCmdSet" id="DiffFilesCommandId" priority="0x0100" type="Button">
 				<Parent guid="guidFile_VSPackageCmdSet" id="FileContextMenuGroup" />
-				<Icon guid="guidImages" id="bmpPic1" />
+				<Icon guid="guidImages" id="1" />
 				<Strings>
 					<ButtonText>Compare with file...</ButtonText>
 				</Strings>
 			</Button>
 			<Button guid="guidFile_VSPackageCmdSet" id="CompareHistoryCommandId" priority="0x0100" type="Button">
 				<Parent guid="guidFile_VSPackageCmdSet" id="FileContextMenuGroup" />
-				<Icon guid="guidImages1" id="bmpPic2" />
+				<Icon guid="guidImages1" id="1" />
 				<Strings>
 					<ButtonText>Compare designer file with history...</ButtonText>
 				</Strings>
 			</Button>
 			<Button guid="guidFile_VSPackageCmdSet" id="DiffContentCommandId" priority="0x0100" type="Button">
 				<Parent guid="guidFile_VSPackageCmdSet" id="EditorContextMenuGroup" />
-				<Icon guid="guidImages2" id="bmpPic3" />
+				<Icon guid="guidImages2" id="1" />
 				<Strings>
 					<ButtonText>Sort Windows Form Designer Generated Code</ButtonText>
 				</Strings>
@@ -85,9 +85,9 @@
             bitmap strip containing the bitmaps and then there are the numeric ids of the elements used
             inside a button definition. An important aspect of this declaration is that the element id
             must be the actual index (1-based) of the bitmap inside the bitmap strip. -->
-			<Bitmap guid="guidImages" href="Resources\DiffFilesCommand.png" usedList="bmpPic1" />
-			<Bitmap guid="guidImages1" href="Resources\CompareHistoryCommand.png" usedList="bmpPic2" />
-			<Bitmap guid="guidImages2" href="Resources\DiffContentCommand.png" usedList="bmpPic3" />
+			<Bitmap guid="guidImages" href="Resources\DiffFilesCommand.png" usedList="1" />
+			<Bitmap guid="guidImages1" href="Resources\CompareHistoryCommand.png" usedList="1" />
+			<Bitmap guid="guidImages2" href="Resources\DiffContentCommand.png" usedList="1" />
 		</Bitmaps>
 	</Commands>
 
@@ -105,15 +105,12 @@
 		</GuidSymbol>
 
 		<GuidSymbol name="guidImages" value="{2a122da1-1d9a-48b8-89ff-ee6527567153}">
-			<IDSymbol name="bmpPic1" value="1" />
 		</GuidSymbol>
 
 		<GuidSymbol name="guidImages1" value="{ed02defe-f3bf-4cf7-913b-9772fffe8e26}">
-			<IDSymbol name="bmpPic2" value="1" />
 		</GuidSymbol>
 
 		<GuidSymbol name="guidImages2" value="{1dd321f2-63ba-4bff-aee8-6f6d3995c650}">
-			<IDSymbol name="bmpPic3" value="1" />
 		</GuidSymbol>
 	</Symbols>
 </CommandTable>

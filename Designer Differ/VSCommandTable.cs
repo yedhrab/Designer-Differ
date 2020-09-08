@@ -37,8 +37,5 @@ namespace DesignerDiffer
         public const int DiffFilesCommandId = 0x0100;
         public const int CompareHistoryCommandId = 0x0101;
         public const int DiffContentCommandId = 0x0102;
-        public const int bmpPic1 = 0x0001;
-        public const int bmpPic2 = 0x0001;
-        public const int bmpPic3 = 0x0001;
     }
 }
