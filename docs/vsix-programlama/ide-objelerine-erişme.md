@@ -1,4 +1,4 @@
-# IDE Objelerine Erişme | VSIX
+# 🍏 IDE Objelerine Erişme | VSIX
 
 ## 🐥 Visual Studio Ortam Objelerine Erişme
 

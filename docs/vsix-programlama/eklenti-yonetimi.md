@@ -1,12 +1,12 @@
-## Eklenti Yönetimi | VSIX
+## 👨‍💼 Eklenti Yönetimi | VSIX
 
-## `.vsct` Dosyası Nedir
+## ❔ `.vsct` Dosyası Nedir
 
 - Proje içerisindeki komutlar, resimler ve benzeri her bilişen bilgisi burada saklanır
 - Tüm bileşenler birbirlerine ve kaynak kodlara guid değerleri ile bağlanır
 - Proje içerisinde tek bir vsct dosyası bulunur
 
-## GUID Değerlerini Tanımlama
+## 🆔 GUID Değerlerini Tanımlama
 
 - Bileşen arasındaki bağlantılar için değişkenleri tanımlayan guid değerleri kullanılır
 - Her guid değeri eşsiz olmak zorundadır
@@ -44,7 +44,7 @@
 </Symbols>
 ```
 
-## Komut Ekleme
+## 👨‍💻 Komut Ekleme
 
 - Komutlar `Commands` içeriside `Groups` objeleri içindeki `Group` değerleri ile derlenir
 - `Group` içerisindeki `Parent` objelerindaki `id` değeri ile komutun nasıl çalışacağını ifade ederiz
@@ -65,7 +65,7 @@
 </Groups>
 ```
 
-## Buton Ekleme
+## 🔘 Buton Ekleme
 
 - Butonlar `Buttons` alanına `GUID` değer ile eklenir
 - Buton guid değeri paket guid değeri ile aynı olur
@@ -115,16 +115,16 @@
 </Bitmaps>
 ```
 
-## Kaynak Koda Bağlama
+## 🔌 Kaynak Koda Bağlama
 
 - Komutların tetiklenmesi durumunda yapılacak eylemler kaynak kod tarafında `Execute` metodu içerisinde belirlenir
 - Kaynak koda komutu bağlamak için `CommandSet` ve o küme içerisindeki `CommandId` değeri gerekir
-    - `CommandSet` vsct dosyası içerisinde `*CmdSet` olarak adlandırılan guid değerini alır
+    - `CommandSet`, `vsct` dosyası içerisinde `*CmdSet` olarak adlandırılan guid değerini alır
     - `CommandId` yukarıdaki guid içerisindeki hedeflenen komutun `IDSymbol` değerlerini alır
 - Bu işlemi senkronize etmek ve her guid değişikliğinde güncellemekten kurtulmak için
     - `vsct` dosyasına sağ tıklayın ve `Syncronize code file` butonuna tıklayın
     - `PackageGuids` ve `PackageIds` içeren C# `class` objeleri otomatik olarak tanımlacaktır  
-    - ![](vsix_sync_manifest.png) 
+    - ![](../assets/vsix_sync_manifest.png) 
 
 ```c#
 namespace DesignerDiffer

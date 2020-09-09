@@ -1,6 +1,6 @@
-# 👨‍💻 VSIX ile Kod Örnekleri
+# 👨‍💻 Kod Örnekleri | VSIX
 
-## VSIX Aktif Dökümanın İçeriğini Alma
+## 📃 Aktif Dökümanın İçeriğini Alma
 
 ```c#
 protected DTE2 dte;
@@ -16,9 +16,9 @@ public string GetCurrentTextFile(){
 }
 ```
 
-> [In VisualStudio DTE, how to get the contents of the ActiveDocument?](https://stackoverflow.com/questions/10606274/in-visualstudio-dte-how-to-get-the-contents-of-the-activedocument)
+> [👪 In VisualStudio DTE, how to get the contents of the ActiveDocument?](https://stackoverflow.com/questions/10606274/in-visualstudio-dte-how-to-get-the-contents-of-the-activedocument)
 
-## Editör Üzerindeki Seçili Metni Sıralama
+## 📝 Editör Üzerindeki Seçili Metni Sıralama
 
 ```c#
 using EnvDTE80;
@@ -35,7 +35,7 @@ ts.Text = string.Join("\n", selectedLines);
 > - [How to get selected text of visual studio 2015 editor windows?](https://stackoverflow.com/a/40508224)
 > - [Read a text file and sort in C#](https://gist.github.com/Ellyll/7716439)
 
-## Editör Üzerindeki Seçili Metnin içerisindeki Method İçeriğini Sıralama
+## 👨‍💻 Editör Üzerindeki Seçili Metnin içerisindeki Method İçeriğini Sıralama
 
 ```c#
 using EnvDTE80;
@@ -58,7 +58,7 @@ func.GetStartPoint(vsCMPart.vsCMPartBody).CreateEditPoint().ReplaceText(func.End
 > - [vs2010 automation : Get the text value of a EnvDTE.CodeElement](https://stackoverflow.com/a/21463351)
 > - [Get function body programatically using Automation](https://social.msdn.microsoft.com/Forums/en-US/542a3756-6d6e-4744-a035-fc7238203857/get-function-body-programatically-using-automation?forum=vsxs)
 
-## VSIX Aktif Dokümandaki Üretilen Kodları Sıralama
+## 📂 Aktif Dokümandaki Üretilen Kodları Sıralama
 
 ```c#
 using EnvDTE80;
@@ -140,7 +140,7 @@ public static bool IsFuncExistInCodeElements(CodeElements codeElements, string n
 > [Get current source file methods in Visual Studio Text Editor Extension](https://stackoverflow.com/a/45181583)
 
 
-## İki Dosya Arasındaki Farklılıkları Gösterme
+## ♊ İki Dosya Arasındaki Farklılıkları Gösterme
 
 - Dosyayı geçici dizine aynı uzantı ve ismle kayıt ediyoruz
 - Ardından `Tool.DiffFiles` komutu ile geçici dizindeki ile orjinal dosyayı karşılaştırıyoruz
@@ -153,9 +153,9 @@ System.IO.File.WriteAllText(tempFilepath, fileContent, System.Text.Encoding.UTF8
 dte2.ExecuteCommand("Tools.DiffFiles", $"\"{tempFilepath}\" \"{filepath}\"");
 ```
 
-## Git Komutu Çalıştırma
+## 🔀 Git Komutu Çalıştırma
 
-### Proje dizinini ve dosya yolunu alma
+### 🧵 Proje dizinini ve dosya yolunu alma
 
 ```c#
 string filepath = "...";
@@ -163,7 +163,7 @@ string solutionDir = System.IO.Path.GetDirectoryName(dte2.Solution.FullName);
 filepath = filepath.Replace($"{solutionDir}\\", "").Replace("\\", "/");
 ```
 
-> [How do you get the current solution directory from a VSPackage?](https://stackoverflow.com/a/2338796s)
+> [👪 How do you get the current solution directory from a VSPackage?](https://stackoverflow.com/a/2338796s)
 
 ### Git process oluşturma ve okuma
 
@@ -200,9 +200,9 @@ while (!gitProcess.StandardOutput.EndOfStream)
 > - [Process.start: how to get the output?](https://stackoverflow.com/a/4291965)
 > - [Is there any async equivalent of Process.Start?](https://stackoverflow.com/a/10789196s)
 
-## VSIX Dosyadan FileCodeModel Oluşturma
+## Dosyadan FileCodeModel Oluşturma
 
-- 💡 Öncelikle stack overflow üzerindeki cevabım [buradadır](https://stackoverflow.com/a/63694279/9770490)
+- 💡 Öncelikle stack overflow üzerindeki cevabım [buradadır](https://stackoverflow.com/a/63694341/9770490)
 - 👮‍♂️ Visual Studio içerisinde açılan proje dosyalarının `FileCodeModel` objesine erişilebilir
 - 🗃️ `dte.ItemOperations.OpenFile` ile açılan dosyalar, `Miscellaneous` olarak gözükür, `ProjectItem` değildir
 - 📂 Dosyayı `ProjectItem` olarak açmak için `dte.ItemOperations.AddExistingItem(filePath);` kodu kullanılır

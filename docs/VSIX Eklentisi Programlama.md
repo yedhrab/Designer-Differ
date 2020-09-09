@@ -26,6 +26,3 @@ Eklentiyi Visual Studio için C# ile programlamlayacağımızdan dolayı:
 - `vcst` ve `vsixmanifest` dosyası `sync` edilmeli
 
 ![](assets/vsix_project_structure.png)
-
-
-
