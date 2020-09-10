@@ -107,6 +107,7 @@
     <Content Include="Resources\CompareHistoryCommand.png" />
     <Content Include="Resources\DiffContentCommand.png" />
     <Content Include="Resources\DiffFilesCommand.png" />
+    <Content Include="Resources\Getting Started Guide.html" />
     <Content Include="Resources\Icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -115,6 +116,16 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="Resources\vsix_compare_usage_part1.png" />
+    <Content Include="Resources\vsix_compare_usage_part2.png" />
+    <Content Include="Resources\vsix_compare_usage_part3.png" />
+    <Content Include="Resources\vsix_rex_usage_part1.png" />
+    <Content Include="Resources\vsix_rex_usage_part2.png" />
+    <Content Include="Resources\vsix_sortfile_usage_part.png" />
+    <Content Include="Resources\vsix_sortfile_usage_part2.png" />
+    <Content Include="Resources\vsix_usage_part1.png" />
+    <Content Include="Resources\vsix_usage_part2.png" />
+    <Content Include="Resources\vsix_usage_part3.png" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Dialogs\CompareWithHistoryDialog.xaml">

@@ -5,6 +5,7 @@
         <DisplayName>Designer-Differ</DisplayName>
         <Description xml:space="preserve">The easiest way to sort windows form designer generated code and resx, to diff files and windows form designer file with git history directly from Solution Explorer.</Description>
         <License>LICENSE.txt</License>
+        <GettingStartedGuide>Getting Started Guide.html</GettingStartedGuide>
         <Icon>Resources\Icon.png</Icon>
         <PreviewImage>Resources\Preview.png</PreviewImage>
         <Tags>differ, file, designer, resx, sort</Tags>

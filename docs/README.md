@@ -2,6 +2,11 @@
 
 Visual Studio Designer tarafından üretilen kodlardaki karmaşıklığı azaltıp, git ile düzgün bir versiyon kıyaslaması sağlayan eklenti
 
+| | |
+|-|-|
+|👨‍💻 Yapımcı |        🤵 Yunus Emre AK ~ [YEmreAk.com](https://yemreak.com)|
+|✨ Son Güncelleme| 📅 10.09.2020 |
+
 ## 🎯 Eklentinin Amaçları
 
 | 💎 Özellik | 🎯 Amaç |
@@ -20,14 +25,6 @@ Visual Studio Designer tarafından üretilen kodlardaki karmaşıklığı azalt�
 - 💦 Projeye dahil edilen dosya projeden çıkarılır ve silinir
 - 🔍 `%TEMP%` dizinine kaydedilen dosyalar Visual Studio Diff Tool ile git kullanarak kıyaslanır
 
-## 💡 Ek Bilgiler
-
-| | |
-|-|-|
-|👨‍💻 Yapımcı |        🤵 Yunus Emre AK ~ [YEmreAk.com](https://yemreak.com)|
-|✨ Son Güncelleme| 📅 10.09.2020 16:30|
-
-
 <div class="page"/>
 
 ## 🎨 Designer Dosyalarını Kıyaslama
@@ -35,7 +32,7 @@ Visual Studio Designer tarafından üretilen kodlardaki karmaşıklığı azalt�
 - 📃 Herhangi bir `*.Designer.cs` dosyasına sağ tıklayın
 - 📋 Açılan menüde `Compare designer file with history...` butonunu seçin
 
-![](vsix_usage_part1.png)
+![](./assets/vsix_usage_part1.png)
 
 - 🔀 Açılan diyalog ekranında `HEAD` olarak yazan, kıyaslanma yapılacak branch ismini temsil eder
 - 🆔 `CommitHash` kısmı için gerekli açıklamalar form üzerinde verilmiştir
@@ -47,11 +44,11 @@ Visual Studio Designer tarafından üretilen kodlardaki karmaşıklığı azalt�
 
 <div class="page"/>
 
-![](vsix_usage_part2.png)
+![](./assets/vsix_usage_part2.png)
 
 - 📹 Kıyaslama sonrasında oluşacak çıktı aşağıdaki gibidir
 
-![](vsix_usage_part3.png)
+![](./assets/vsix_usage_part3.png)
 
 <div class="page"/>
 
@@ -60,7 +57,7 @@ Visual Studio Designer tarafından üretilen kodlardaki karmaşıklığı azalt�
 - 📃 Herhangi bir `*.resx` dosyasına sağ tıklayın
 - 📋 Açılan menüde `Compare designer file with history...` butonunu seçin
 
-![](vsix_rex_usage_part1.png)
+![](./assets/vsix_rex_usage_part1.png)
 
 - 🔀 Açılan diyalog ekranında `HEAD` olarak yazan, kıyaslanma yapılacak branch ismini temsil eder
 - 🆔 `CommitHash` kısmı için gerekli açıklamalar form üzerinde verilmiştir
@@ -72,11 +69,11 @@ Visual Studio Designer tarafından üretilen kodlardaki karmaşıklığı azalt�
 
 <div class="page"/>
 
-![](vsix_usage_part2.png)
+![](./assets/vsix_usage_part2.png)
 
 - 📹 Kıyaslama sonrasında oluşacak çıktı aşağıdaki gibidir
 
-![](vsix_rex_usage_part2.png)
+![](./assets/vsix_rex_usage_part2.png)
 
 <div class="page"/>
 
@@ -87,11 +84,11 @@ Visual Studio Designer tarafından üretilen kodlardaki karmaşıklığı azalt�
 
 > 📢 Sıralama sırasında verileri koruma amacıyla sıralanmış kodları dosyaya kaydetmez, dilerseniz <kbd>✲ Ctrl</kbd> <kbd>S</kbd> kısayolu ile kaydedebilirsiniz.
 
-![](vsix_sortfile_usage_part.png)
+![](./assets/vsix_sortfile_usage_part.png)
 
 - 📹 Kıyaslama sonrasında oluşacak çıktı aşağıdaki gibidir
 
-![](vsix_sortfile_usage_part2.png)
+![](./assets/vsix_sortfile_usage_part2.png)
 
 <div class="page"/>
 
@@ -102,14 +99,14 @@ Visual Studio Designer tarafından üretilen kodlardaki karmaşıklığı azalt�
 
 > 📢 İsterseniz 2 dosyayı birden seçip sağ tıklayarak, ikisi arasındaki farkları görebilirsiniz
 
-![](vsix_compare_usage_part1.png)
+![](./assets/vsix_compare_usage_part1.png)
 
 - 🗃️ Eğer iki dosya seçmediyseniz, dosya gezgini üzerinden, istediğiniz bir dosyayı seçin
 
-![](vsix_compare_usage_part2.png)
+![](./assets/vsix_compare_usage_part2.png)
 
 <div class="page"/>
 
 - 📹 Kıyaslama sonrasında oluşacak çıktı aşağıdaki gibidir
 
-![](vsix_compare_usage_part3.png)
+![](./assets/vsix_compare_usage_part3.png)
